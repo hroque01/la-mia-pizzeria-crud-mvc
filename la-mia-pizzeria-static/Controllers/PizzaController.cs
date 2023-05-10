@@ -69,9 +69,19 @@ namespace la_mia_pizzeria_static.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
-        }
+            using (PizzaContext context = new PizzaContext())
+            {
+                List<Category> categories = context.Categories.ToList();
 
+                PizzaFormModel model = new PizzaFormModel();
+                model.Pizza = new Pizza();
+                model.Categories = categories;
+
+                return View("Create", model);
+            }
+            
+        }
+         
         [HttpGet]
         public IActionResult Update(long id)
         {
