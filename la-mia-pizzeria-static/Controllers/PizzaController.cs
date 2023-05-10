@@ -1,5 +1,6 @@
 ﻿using la_mia_pizzeria_static.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace la_mia_pizzeria_static.Controllers
 {
@@ -32,12 +33,12 @@ namespace la_mia_pizzeria_static.Controllers
         {
             using (PizzaContext db = new PizzaContext())
             {
-                Pizza pizza = db.Pizza.Where(pizza => pizza.Id == id).FirstOrDefault();
+                Pizza pizza = db.Pizza.Where(pizza => pizza.Id == id).Include(pizza => pizza.Category).FirstOrDefault();
 
                 if (pizza == null)
                     return View("Error", "Nessuna pizza trovata con questo ID!");
 
-                return View(pizza);
+                return View("Details", pizza);
             }
         }
 
@@ -117,23 +118,28 @@ namespace la_mia_pizzeria_static.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public IActionResult Update(long id, Pizza data)
+        public IActionResult Update(long id, PizzaFormModel data)
         {
             if (!ModelState.IsValid)
             {
-                return View("Update", data);
+                using (PizzaContext db = new PizzaContext())
+                {
+                    List<Category> categories = db.Categories.ToList();
+                    data.Categories = categories;
+                    return View("Update", data);
+                }
             }
 
-            using(PizzaContext db = new PizzaContext())
+            using (PizzaContext db = new PizzaContext())
             {
                 Pizza pizza = db.Pizza.Where(pizza => pizza.Id == id).FirstOrDefault();
 
                 if (pizza != null)
                 {
-                    pizza.Nome = data.Nome;
-                    pizza.Descrizione = data.Descrizione;
-                    pizza.Prezzo = data.Prezzo;
-
+                    pizza.Nome = data.Pizza.Nome;
+                    pizza.Descrizione = data.Pizza.Descrizione;
+                    pizza.Prezzo = data.Pizza.Prezzo;
+                    pizza.CategoryId = data.Pizza.CategoryId;
 
                     db.SaveChanges();
 

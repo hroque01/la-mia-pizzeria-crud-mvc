@@ -25,7 +25,16 @@
             <strong>Link Immagine:</strong>
             <input asp-for="Pizza.Img" class="d-block w-100" />
             <span asp-validation-for="Pizza.Img" class="text-danger"></span>
-
+        </div>
+        <div action="mb-3">
+            <strong>Categorie:</strong>
+            <select asp-for="Pizza.CategoryId" rows="10" class="d-block w-100">
+                <option value=""></option>
+                @foreach (Category category in Model.Categories)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            </select>
         </div>
         <div class="text-end">
             <input type="submit" class="btn btn-small btn-info" value="Salva">
