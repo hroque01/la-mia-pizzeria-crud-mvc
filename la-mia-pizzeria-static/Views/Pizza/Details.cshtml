@@ -4,11 +4,23 @@
         <div class="card">
             <img src="@Model.Img" alt="Pizza1">
             <div class="card-body">
-            <h5 class="card-title">@Model.Nome</h5>
-                <p class="card-text">
-                    @Model.Descrizione
+                <h5 class="card-title">@Model.Nome</h5>
+                    <p class="card-text">
+                        @Model.Descrizione
+                    </p>
+                <h6>@Model.Prezzo&euro;</h6>
+                <p>
+                    <strong>Category:</strong>
+                    @if (Model.Category != null)
+                    {
+                        @Model.Category.Name
+                    }
+                    else
+                    {
+                        <span>Nessuno sport</span>
+                    }
                 </p>
-            <h6>@Model.Prezzo&euro;</h6>
             </div>
+
         </div>
 </div>

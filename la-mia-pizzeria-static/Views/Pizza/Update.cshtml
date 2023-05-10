@@ -1,7 +1,7 @@
 ﻿@model PizzaFormModel
 
 <div class="container">
-    <form asp-controller="Pizza" asp-action="Update" method="post" asp-route-id="@Model.Id">
+    <form asp-controller="Pizza" asp-action="Update" method="post" asp-route-id="@Model.Pizza.Id">
         @Html.AntiForgeryToken()
         <div class="mb-3">
             <strong>Nome:</strong>
@@ -11,8 +11,8 @@
         </div>
         <div class="mb-3">
             <strong>Descrizione:</strong>
-            <input asp-for="Piza.Descrizione" class="d-block w-100" />
-            <span asp-validation-for="Piza.Descrizione" class="text-danger"></span>
+            <input asp-for="Pizza.Descrizione" class="d-block w-100" />
+            <span asp-validation-for="Pizza.Descrizione" class="text-danger"></span>
 
         </div>
         <div class="mb-3">
