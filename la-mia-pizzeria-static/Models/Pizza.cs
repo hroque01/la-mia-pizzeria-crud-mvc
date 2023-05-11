@@ -27,6 +27,7 @@ namespace la_mia_pizzeria_static.Models
         public string Img { get; set; }
         public long? CategoryId { get; set; }
         public Category? Category { get; set; }
+        public List<Ingredients>? Ingredients { get; set; }
 
     }
 }
