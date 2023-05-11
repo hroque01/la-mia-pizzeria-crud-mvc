@@ -123,7 +123,7 @@ namespace la_mia_pizzeria_static.Controllers
             }
             
         }
-         
+
         [HttpGet]
         public IActionResult Update(long id)
         {
@@ -137,14 +137,30 @@ namespace la_mia_pizzeria_static.Controllers
                 else
                 {
                     List<Category> categories = db.Categories.ToList();
+
                     PizzaFormModel model = new PizzaFormModel();
-                    model.Pizza = pizza; 
+                    List<Ingredients> ingredients = db.Ingredients.ToList();
+                    List<SelectListItem> listIngredients = new List<SelectListItem>();
+                    pizza.Ingredients = new List<Ingredients>();
+
+                    foreach (Ingredients ingredient in ingredients)
+                    {
+                        listIngredients.Add(new SelectListItem()
+                        {
+                            Text = ingredient.Name,
+                            Value = ingredient.Id.ToString(),
+                            Selected = pizza.Ingredients.Any(pizza => pizza.Id == ingredient.Id)
+                        });
+                    }
+
+                    model.Pizza = pizza;
                     model.Categories = categories;
+                    model.Ingredients = listIngredients;
+
                     return View(model);
                 }
-                    
             }
-             
+
         }
 
         [HttpPost]
