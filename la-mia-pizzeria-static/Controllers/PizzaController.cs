@@ -45,7 +45,7 @@ namespace la_mia_pizzeria_static.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = "ADMIN")]
         [HttpGet]
         public IActionResult Create()
         {
@@ -73,7 +73,7 @@ namespace la_mia_pizzeria_static.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(PizzaFormModel data)
@@ -132,7 +132,7 @@ namespace la_mia_pizzeria_static.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = "ADMIN")]
         [HttpGet]
         public IActionResult Update(long id)
         {
@@ -140,7 +140,7 @@ namespace la_mia_pizzeria_static.Controllers
             {
                 Pizza pizza = db.Pizza.Where(pizza => pizza.Id == id).FirstOrDefault();
 
-                if (pizza == null)
+                if (pizza == null )
                     return NotFound();
 
                 else
@@ -172,7 +172,7 @@ namespace la_mia_pizzeria_static.Controllers
 
         }
 
-        [Authorize]
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         [ValidateAntiForgeryToken]
 
@@ -236,7 +236,7 @@ namespace la_mia_pizzeria_static.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(long id)
