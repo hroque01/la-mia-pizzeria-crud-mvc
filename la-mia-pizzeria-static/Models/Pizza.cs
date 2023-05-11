@@ -25,8 +25,12 @@ namespace la_mia_pizzeria_static.Models
         [Required(ErrorMessage = "L'Immagine è richiesta")]
         [Url]
         public string Img { get; set; }
-        public long? CategoryId { get; set; }
+
+        public int? CategoryId { get; set; }
+
+        [ForeignKey("CategoryId")]
         public Category? Category { get; set; }
+
         public List<Ingredients>? Ingredients { get; set; }
 
     }

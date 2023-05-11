@@ -79,10 +79,7 @@ namespace la_mia_pizzeria_static.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long?>("CategoryId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int?>("CategoryId1")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Descrizione")
@@ -103,7 +100,7 @@ namespace la_mia_pizzeria_static.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId1");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("pizza");
                 });
@@ -127,7 +124,7 @@ namespace la_mia_pizzeria_static.Migrations
                 {
                     b.HasOne("la_mia_pizzeria_static.Models.Category", "Category")
                         .WithMany("Pizze")
-                        .HasForeignKey("CategoryId1");
+                        .HasForeignKey("CategoryId");
 
                     b.Navigation("Category");
                 });

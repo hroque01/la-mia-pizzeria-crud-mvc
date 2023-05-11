@@ -5,11 +5,24 @@
 namespace la_mia_pizzeria_static.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateEntityIngredients : Migration
+    public partial class UpdateEntityAddBook123123 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Category",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Category", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Ingredients",
                 columns: table => new
@@ -21,6 +34,28 @@ namespace la_mia_pizzeria_static.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Ingredients", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "pizza",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: false),
+                    Descrizione = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Prezzo = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Img = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_pizza", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_pizza_Category_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Category",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -51,6 +86,11 @@ namespace la_mia_pizzeria_static.Migrations
                 name: "IX_IngredientsPizza_PizzaId",
                 table: "IngredientsPizza",
                 column: "PizzaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_pizza_CategoryId",
+                table: "pizza",
+                column: "CategoryId");
         }
 
         /// <inheritdoc />
@@ -61,6 +101,12 @@ namespace la_mia_pizzeria_static.Migrations
 
             migrationBuilder.DropTable(
                 name: "Ingredients");
+
+            migrationBuilder.DropTable(
+                name: "pizza");
+
+            migrationBuilder.DropTable(
+                name: "Category");
         }
     }
 }
