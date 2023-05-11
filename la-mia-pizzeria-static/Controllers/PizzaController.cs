@@ -53,8 +53,16 @@ namespace la_mia_pizzeria_static.Controllers
                 using (PizzaContext db = new PizzaContext())
                 {
                     List<Category> categories = db.Categories.ToList();
+                    List<Ingredients> ingredients = db.Ingredients.ToList();
+                    List<SelectListItem> listIngredients = new List<SelectListItem>();
+                    foreach (Ingredients ingredient in ingredients)
+                    {
+                        listIngredients.Add(
+                            new SelectListItem()
+                            { Text = ingredient.Name, Value = ingredient.Id.ToString() });
+                    }
                     data.Categories = categories;
-                    return View(data);
+                    return View("Create", data);
                 }
             }
 
@@ -68,6 +76,15 @@ namespace la_mia_pizzeria_static.Controllers
 
                 pizza.CategoryId = data.Pizza.CategoryId;
 
+                if (data.SelectedIngredients != null)
+                {
+                    foreach (string selectedIngredientsId in data.SelectedIngredients)
+                    {
+                        int selectedIntIngredientsId = int.Parse(selectedIngredientsId);
+                        Ingredients ingredient = db.Ingredients.Where(m => m.Id == selectedIntIngredientsId).FirstOrDefault();
+                        pizza.Ingredients.Add(ingredient);
+                    }
+                }
                 db.Pizza.Add(pizza);
                 db.SaveChanges();
 
@@ -89,8 +106,7 @@ namespace la_mia_pizzeria_static.Controllers
 
                 List<SelectListItem> listIngredients = new List<SelectListItem>();
                 
-                //da errore quindi bisogna andare su Pizza.cs e metti "?" a quello che ti da errore (in questo caso Ingredients)
-                Ingredients ingredients = context.Ingredients.ToList();
+                List<Ingredients> ingredients = context.Ingredients.ToList();
 
                 foreach(Ingredients ingredient in ingredients)
                 {
