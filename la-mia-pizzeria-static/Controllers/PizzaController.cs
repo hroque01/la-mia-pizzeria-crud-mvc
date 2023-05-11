@@ -1,6 +1,8 @@
 ﻿using la_mia_pizzeria_static.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Eventing.Reader;
 
 namespace la_mia_pizzeria_static.Controllers
 {
@@ -84,6 +86,19 @@ namespace la_mia_pizzeria_static.Controllers
                 List<Category> categories = context.Categories.ToList();
 
                 PizzaFormModel model = new PizzaFormModel();
+
+                List<SelectListItem> listIngredients = new List<SelectListItem>();
+                
+                //da errore quindi bisogna andare su Pizza.cs e metti "?" a quello che ti da errore (in questo caso Ingredients)
+                Ingredients ingredients = context.Ingredients.ToList();
+
+                foreach(Ingredients ingredient in ingredients)
+                {
+                    listIngredients.Add(new SelectListItem()
+                    {
+                        Text = ingredient.Name, Value = ingredient.Id.ToString()
+                    });
+                }
                 model.Pizza = new Pizza();
                 model.Categories = categories;
 
