@@ -116,6 +116,7 @@ namespace la_mia_pizzeria_static.Controllers
                     });
                 }
                 model.Pizza = new Pizza();
+                model.Ingredients = listIngredients;
                 model.Categories = categories;
 
                 return View("Create", model);
